@@ -1,0 +1,56 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "bsutils"
+version = "0.1.0"
+description = "betsheet utilities"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [
+    {name = "BetSheet", email = "betsheet@protonmail.com"}
+]
+keywords = ["sports", "betting", "utilities", "bot", "autobetting"]
+
+dependencies = [
+    # Core dependencies
+    "pydantic>=2.0.0",
+    
+    # Database
+    "pymongo>=4.0.0",
+    
+    # Logging
+    "loguru>=0.7.0",
+    
+    # Utilities
+    "thefuzz>=0.20.0",
+    "typing-extensions>=4.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/betsheet/bsutils"
+Repository = "https://github.com/betsheet/bsutils.git"
+Issues = "https://github.com/betsheet/bsutils/issues"
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[tool.black]
+line-length = 120
+target-version = ["py310"]
+
+[tool.mypy]
+python_version = "3.10"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false

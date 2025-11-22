@@ -43,8 +43,8 @@ Homepage = "https://github.com/betsheet/bsutils"
 Repository = "https://github.com/betsheet/bsutils.git"
 Issues = "https://github.com/betsheet/bsutils/issues"
 
-[tool.setuptools.packages.find]
-where = ["."]
+[tool.setuptools]
+packages = ["bsutils"]
 
 [tool.black]
 line-length = 120

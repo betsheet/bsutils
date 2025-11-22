@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "bsutils"
 version = "0.1.0"
 description = "betsheet utilities"
+readme = "README.md"
 requires-python = ">=3.10"
 license = {text = "MIT"}
 authors = [
@@ -41,7 +42,6 @@ dev = [
 Homepage = "https://github.com/betsheet/bsutils"
 Repository = "https://github.com/betsheet/bsutils.git"
 Issues = "https://github.com/betsheet/bsutils/issues"
-
 
 [tool.setuptools.packages.find]
 where = ["."]

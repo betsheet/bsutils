@@ -1,10 +1,12 @@
-from typing import Any, Annotated
+from typing import Any
 from bson import ObjectId
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 
 class BSBaseEntity(BaseModel):
-    id_: Annotated[str | None, Field(alias="_id")] = None
+    model_config = ConfigDict(populate_by_name=True)
+    
+    id_: str | None = Field(default=None, alias="_id")
 
     def __init__(self, /, **data: Any):
         super().__init__(**data)

@@ -1,10 +1,10 @@
-from typing import Any, Optional
+from typing import Any, Optional, Annotated
 from bson import ObjectId
 from pydantic import BaseModel, Field
 
 
 class BSBaseEntity(BaseModel):
-    id_: Optional[str | None] = Field(None, alias="_id")
+    id_: Annotated[Optional[str | None], Field(alias="_id")] = None
 
     def __init__(self, /, **data: Any):
         super().__init__(**data)

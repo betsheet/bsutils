@@ -2,7 +2,7 @@ from bsutils.base.base import BSBaseEntity
 
 
 class BSUserCredentials(BSBaseEntity):
-    username: str
+    email: str
     password: str
 
 class UserStakeConfig(BSBaseEntity):

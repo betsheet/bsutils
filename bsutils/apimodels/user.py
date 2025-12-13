@@ -6,6 +6,7 @@ class BSUserCredentials(BSBaseEntity):
     password: str
 
 class UserStakeConfig(BSBaseEntity):
+    # TODO: completar
     user_id: str
 
 class UserTelegramData(BSBaseEntity):
@@ -16,5 +17,3 @@ class UserTelegramData(BSBaseEntity):
 class BSUser(BSBaseEntity):
     email: str | None
     credentials: BSUserCredentials
-    stake_config: UserStakeConfig | None
-    telegram_data: UserTelegramData | None

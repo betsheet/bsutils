@@ -1,4 +1,5 @@
 # TODO: creo que debería estar en bsutils.apimodels.responses para leerlo cliente
+from bsutils.apimodels.user import UserTelegramData, UserStakeConfig
 from bsutils.base.base import BSBaseEntity
 
 
@@ -9,3 +10,9 @@ class LoginResponse(BSBaseEntity):
 class TelegramAppCredentialsResponse(BSBaseEntity):
     api_id: int
     api_hash: str
+
+class BSUserDataResponse(BSBaseEntity):
+    user_id: str
+    email: str
+    telegram_data: UserTelegramData
+    stake_config: UserStakeConfig

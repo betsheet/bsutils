@@ -6,11 +6,12 @@ class BSUserCredentials(BSBaseEntity):
     password: str
 
 class UserStakeConfig(BSBaseEntity):
-    pass
+    user_id: str
 
 class UserTelegramData(BSBaseEntity):
-    telegram_user_id: str
+    user_id: str
     phone_number: str    # with country code, e.g., +34123456789
+    telegram_id: str
 
 class BSUser(BSBaseEntity):
     email: str | None

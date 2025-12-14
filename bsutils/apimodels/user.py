@@ -13,6 +13,7 @@ class UserTelegramData(BSBaseEntity):
     user_id: str
     phone_number: str    # with country code, e.g., +34123456789
     telegram_id: str
+    listening_channels: list[str] = []
 
 class BSUser(BSBaseEntity):
     email: str | None

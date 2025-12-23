@@ -12,6 +12,7 @@ class PickSourceEnum(Enum):
     BLOGABET = "Blogabet"
     WINNER_ODDS = "WinnerOdds"
     BETAMINIC_BETTING_SHOTS = "BetaminicBettingShots"
+    INPLAY_FOOTBALL_TIPS = "InplayFootballTips"
     TEST = "Test"
 
 

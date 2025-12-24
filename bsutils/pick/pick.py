@@ -23,6 +23,7 @@ class Pick(BSBaseEntity):
 
     date: str | None = None
     time: str | None = None
+    is_live: bookie = False
 
     participants: list[str] | None = None  # se obtienen del string del event.
 

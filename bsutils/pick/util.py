@@ -28,6 +28,7 @@ class PickSportEnum(Enum):
 class BSMarketEnum(Enum):
     RESULT = "1x2"
     ASIAN_HANDICAP = "AsianHandicap"
+    HALF_TIME_ASIAN_HANDICAP = "HalfTimeAsianHandicap"  # 1st Half Asian Handicap
     TOTAL_GOALS = "TotalGoals"
     TOTALS = "Totals"
     SPREAD = "Spread"

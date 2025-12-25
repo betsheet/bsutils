@@ -1,5 +1,4 @@
 from enum import Enum
-from typing import Optional
 from bsutils.base.base import BSBaseEntity
 from bsutils.bookie.bsbookie import BSBookieEnum
 from bsutils.pick.util import PickSourceEnum, BSSelection, BSMarketEnum, PickSportEnum
@@ -12,8 +11,8 @@ class PickResult(Enum):
 
 # Pick class
 class Pick(BSBaseEntity):
-    user_id: Optional[str | None] = None  # el pick están siempre asociados al usuario que lo proporcionó.
-    message_id: Optional[str | None] = None # id del mensaje del que hemos obtenido el pick
+    user_id: str | None = None  # el pick están siempre asociados al usuario que lo proporcionó.
+    message_id: str | None = None  # id del mensaje del que hemos obtenido el pick
     source: PickSourceEnum | None = None
 
     bookie: BSBookieEnum | None = None  # bookie para la que se publicó el pick, aunque la coloquemos en otra
@@ -31,8 +30,8 @@ class Pick(BSBaseEntity):
     min_odds: float | None = None
     stake_units: float | None = None
 
-    reception_time: Optional[str] | None = None
-    result: Optional[PickResult] | None = None
+    reception_time: str | None = None
+    result: PickResult | None = None
 
     def get_event_string(self, separator: str = " vs. ") -> str:
         return f"{self.participants[0]}{separator}{self.participants[1]}"

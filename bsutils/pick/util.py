@@ -13,6 +13,7 @@ class PickSourceEnum(Enum):
     WINNER_ODDS = "WinnerOdds"
     BETAMINIC_BETTING_SHOTS = "BetaminicBettingShots"
     INPLAY_FOOTBALL_TIPS = "InplayFootballTips"
+    BETTING_SIGNALS = "BettingSignals"
     TEST = "Test"
 
 

@@ -50,9 +50,4 @@ class Bet(BSBaseEntity):
         return ObjectId(self.pick_id)
 
     def __str__(self):
-        status = "✓ Placed" if self.is_placed else "✗ Failed"
-        error_str = f" ({self.placing_error.value})" if self.placing_error else ""
-        odds_str = f" @ {self.placed_odds}" if self.placed_odds else ""
-        time_str = f" at {self.placement_time}" if self.placement_time else ""
-        
         return f"Bet[{self.bookie.value}] {self.id_}"

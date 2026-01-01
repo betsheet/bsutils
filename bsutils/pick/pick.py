@@ -11,6 +11,7 @@ class PickResult(Enum):
 
 # Pick class
 class Pick(BSBaseEntity):
+    # TODO cambiar a formato Optional[]
     user_id: str | None = None  # el pick están siempre asociados al usuario que lo proporcionó.
     message_id: str | None = None  # id del mensaje del que hemos obtenido el pick
     source: PickSourceEnum | None = None

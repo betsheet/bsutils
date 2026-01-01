@@ -42,9 +42,10 @@ class Bet(BSBaseEntity):
     def set_placed_odds(self, odds: float):
         self.placed_odds = odds
 
-    def set_as_placed(self, placed_value: bool):
+    def set_as_placed(self, placed_value: bool, placed_odds: Optional[float] = None):
         self.is_placed = placed_value
         self.placement_time = str(datetime.now().strftime("%d/%m/%Y %H:%M:%S"))
+        self.set_placed_odds(placed_odds)
 
     def get_pick_id(self) -> ObjectId:
         return ObjectId(self.pick_id)

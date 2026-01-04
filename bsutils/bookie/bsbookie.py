@@ -1,4 +1,6 @@
 from enum import Enum
+from typing import Optional
+
 from bsutils.base.base import BSBaseEntity
 
 
@@ -19,6 +21,7 @@ class BSBookieEnum(Enum):
 # TODO: Esta clase quizás debería estar en el paquete del cliente.
 # esto no debemos guardarlo nunca en nuestra base de datos, sino en el cliente
 class BSBookieCredentials(BSBaseEntity):
+    user_id: Optional[str]
     bookie: BSBookieEnum
     username: str
     password: str

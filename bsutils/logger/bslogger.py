@@ -16,6 +16,8 @@ class BSLogger:
         if debug:
             logger.add(sys.stdout, level="DEBUG")
 
+    # Claude sugiere un método exception en esta clases
+
     @staticmethod
     def info(msg: str) -> None:
         logger.info(msg)

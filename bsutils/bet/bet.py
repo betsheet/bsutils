@@ -21,6 +21,7 @@ class BetError(Enum):
     STAKING_ERROR = "StakingError"
     INSUFFICIENT_BANK = "InsufficientBankError"
     INACTIVE_ACCOUNT = "InactiveAccountError"
+    OPENING_BLACK_SEARCH_EVENT_MODAL_ERROR = "OpeningBlackSearchEventModalError"
     UNEXPECTED_ERROR = "UnexpectedError"
     GENERIC_EXCEPTION = "GenericException"
 

@@ -20,7 +20,8 @@ dependencies = [
     
     # Database
     "pymongo>=4.0.0",
-    
+    "bson>=0.5.0",
+
     # Logging
     "loguru>=0.7.0",
     

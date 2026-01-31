@@ -1,13 +1,7 @@
-from enum import Enum
 from bsutils.base.base import BSBaseEntity
 from bsutils.bookie.bsbookie import BSBookieEnum
-from bsutils.pick.util import PickSourceEnum, BSSelection, BSMarketEnum, PickSportEnum
+from bsutils.pick.util import PickResult, PickSourceEnum, BSSelection, BSMarketEnum, PickSportEnum
 
-
-class PickResult(Enum):
-    SUCCESS = "Success"
-    FAIL = "Fail"
-    NULL = "Null"
 
 # Pick class
 class Pick(BSBaseEntity):

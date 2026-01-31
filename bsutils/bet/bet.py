@@ -22,6 +22,7 @@ class BetError(Enum):
     INSUFFICIENT_BANK = "InsufficientBankError"
     INACTIVE_ACCOUNT = "InactiveAccountError"
     OPENING_BLACK_SEARCH_EVENT_MODAL_ERROR = "OpeningBlackSearchEventModalError"
+    MARKET_NOT_SUPPORTED_ERROR = "NotSupportedMarketError"
     UNEXPECTED_ERROR = "UnexpectedError"
     GENERIC_EXCEPTION = "GenericException"
 

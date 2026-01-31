@@ -5,6 +5,12 @@ from typing_extensions import override
 from bsutils.base.base import BSBaseEntity
 
 
+class PickResult(Enum):
+    SUCCESS = "Success"
+    FAIL = "Fail"
+    NULL = "Null"
+
+
 class PickSourceEnum(Enum):
     BETAMINIC = "Betaminic"
     ODDS_NOTIFIER = "OddsNotifier"

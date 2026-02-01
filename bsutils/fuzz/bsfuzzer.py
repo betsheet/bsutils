@@ -29,7 +29,7 @@ class BSFuzzer:
         return ratio >= min_ratio and partial_ratio >= min_partial_ratio
 
     @staticmethod
-    def _is_valid_event_participant_list(pick_participants: list[str], web_participants: list[str], min_ratio: int = 42, min_partial_ratio: int = 64) -> bool:
+    def is_valid_event_participant_list(pick_participants: list[str], web_participants: list[str], min_ratio: int = 42, min_partial_ratio: int = 64) -> bool:
 
         # TODO: éste es el que se llama para buscar los eventos en black. Hay que mejorarlo. Si em ambos participants
         #  coincide una palabra lo suficientemente larga, aumentar la puntuación.
@@ -50,7 +50,7 @@ class BSFuzzer:
         return min(100.0, computed_ratio)
 
     @staticmethod
-    def is_valid_event_participant_list(
+    def _is_valid_event_participant_list(
             pick_participants: list[str],
             web_participants: list[str],
             min_ratio: int = 42,

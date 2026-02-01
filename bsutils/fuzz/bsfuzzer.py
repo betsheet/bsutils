@@ -98,7 +98,7 @@ class BSFuzzer:
              ' athletic': ' ath', ' atletico': ' atl',
              ' deportivo': ' dep', ' real': '',
              ' club': '', ' de': '', ' del': '',
-             ' sporting': ' sp', '
+             ' sporting': ' sp'
          }
 
          name_lower = name.lower()

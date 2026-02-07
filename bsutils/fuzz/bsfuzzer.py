@@ -23,20 +23,55 @@ class BSFuzzer:
 
     @staticmethod
     def check_participant_similarity(web_participant: str, pick_participant: str, min_ratio: int = 42, min_partial_ratio: int = 85) -> bool:
-        # TODO: investigar ratio Tottenham / Nottingham, que se confunden
         ratio: float = BSFuzzer.get_ratio(web_participant, pick_participant)
         partial_ratio: float = BSFuzzer.get_partial_ratio(web_participant, pick_participant)
         return ratio >= min_ratio and partial_ratio >= min_partial_ratio
 
     @staticmethod
-    def is_valid_event_participant_list(pick_participants: list[str], web_participants: list[str], min_ratio: int = 42, min_partial_ratio: int = 64) -> bool:
+    def is_valid_event_participant_list(pick_participants: list[str], web_participants: list[str], validation_threshold: float = 0.65) -> bool:
 
         # TODO: éste es el que se llama para buscar los eventos en black. Hay que mejorarlo. Si em ambos participants
         #  coincide una palabra lo suficientemente larga, aumentar la puntuación.
+        if not len(web_participants) == 2 or not len(pick_participants) == 2:
+            return False
+
+        # analizamos similitud de home
+        home_ratio: float = BSFuzzer.get_participant_ratio(pick_participants[0], web_participants[0])
+        away_ratio: float = BSFuzzer.get_participant_ratio(pick_participants[1], web_participants[1])
 
 
-        return (len(web_participants) == 2 and (BSFuzzer.check_participant_similarity(web_participants[0], pick_participants[0], min_ratio, min_partial_ratio)) and
-                (BSFuzzer.check_participant_similarity(web_participants[1], pick_participants[1], min_ratio, min_partial_ratio)))
+        """
+            si uno de los 2 coincide 100% le damos un bonus al whole/partial ratio.
+            
+            necesitamos un buen método de normalización de strings para evitar problemas con tildes, caracteres especiales, 
+            cadenas propias de participants (W, II, Reserves, Utd...) etc.
+        """
+        # TODO: Exigimos que la media de ratios de ambos participants supere un umbral de validación, quizás deberíamos considerar otras métricas.
+        computed_ratio: float = (home_ratio + away_ratio) / 2
+        return computed_ratio >= validation_threshold
+
+
+    @staticmethod
+    def get_participant_ratio(pick_participant: str, search_result_participant: str, total_ratio_weight: float = 0.7,
+                              partial_ratio_weight: float = 0.3, total_coincidence_ratio: float = 1.5) -> float:
+        normalized_pick_participant: str = BSFuzzer._normalize_string(pick_participant)
+        normalized_search_result: str = BSFuzzer._normalize_string(search_result_participant)
+
+        computed_total_ratio: float = BSFuzzer.get_ratio(normalized_pick_participant, normalized_search_result)
+        computed_partial_ratio: float = BSFuzzer.get_partial_ratio(normalized_pick_participant, normalized_search_result)
+
+        # computar coincidencia completa (bonus)
+        if normalized_pick_participant in normalized_search_result or normalized_search_result in normalized_pick_participant:
+            computed_partial_ratio = min(100.0, computed_partial_ratio * total_coincidence_ratio)
+
+        # Devolvemos una ponderación de ambos ratios, dando más peso al total ratio pero sin descartar el partial ratio
+        return computed_total_ratio * total_ratio_weight + computed_partial_ratio * partial_ratio_weight
+
+    @staticmethod
+    def _normalize_string(s: str) -> str:
+        # Normalizamos el string para eliminar acentos y caracteres especiales
+        normalized = unicodedata.normalize('NFD', s.lower())
+        return ''.join(c for c in normalized if unicodedata.category(c) != 'Mn')
 
     @staticmethod
     def compute_ratio(pick_participants: list[str], search_result_event_participants: list[str], partial_ratio_factor : float = 0.65) -> float:
@@ -48,67 +83,3 @@ class BSFuzzer:
         computed_ratio: float = ((1.0 - partial_ratio_factor) * (home_ratio + away_ratio) / 2
                                  + partial_ratio_factor * (home_partial_ratio + away_partial_ratio) / 2)
         return min(100.0, computed_ratio)
-
-    @staticmethod
-    def _is_valid_event_participant_list(
-            pick_participants: list[str],
-            web_participants: list[str],
-            min_ratio: int = 42,
-            min_partial_ratio: int = 64
-    ) -> bool:
-        if len(web_participants) != 2 or len(pick_participants) != 2:
-            return False
-
-        # Normalizar
-        pick_norm = [BSFuzzer._normalized_participant_string(p) for p in pick_participants]
-        web_norm = [BSFuzzer._normalized_participant_string(p) for p in web_participants]
-
-        # Ratios para cada participante
-        ratios = [
-            max(fuzz.ratio(pick_norm[i], web_norm[i]),
-                fuzz.token_set_ratio(pick_norm[i], web_norm[i]))
-            for i in range(2)
-        ]
-
-        partial_ratios = [
-            fuzz.partial_ratio(pick_norm[i], web_norm[i])
-            for i in range(2)
-        ]
-
-        # Bonus por palabras comunes
-        common_words = sum(len(BSFuzzer._get_common_words(pick_norm[i], web_norm[i]))
-                           for i in range(2))
-        common_bonus = common_words * 5
-
-        # Promedios (sin ponderar)
-        avg_ratio = sum(ratios) / 2 + common_bonus
-        avg_partial = sum(partial_ratios) / 2
-
-        return avg_ratio >= min_ratio and avg_partial >= min_partial_ratio
-
-
-    @staticmethod
-    def _normalized_participant_string(participant: str) -> str:
-         name = ''.join(c for c in unicodedata.normalize('NFD', participant)
-                        if unicodedata.category(c) != 'Mn')
-         # Normalizar abreviaturas comunes
-         replacements = {
-             ' fc': '', ' cf': '', ' cd': '', ' sd': '',
-             ' united': ' utd', ' football club': '',
-             ' athletic': ' ath', ' atletico': ' atl',
-             ' deportivo': ' dep', ' real': '',
-             ' club': '', ' de': '', ' del': '',
-             ' sporting': ' sp'
-         }
-
-         name_lower = name.lower()
-         for old, new in replacements.items():
-             name_lower = name_lower.replace(old, new)
-         return name_lower.strip()
-
-    @staticmethod
-    def _get_common_words(str1: str, str2: str, min_length: int = 4) -> list[str]:
-        """Encuentra palabras comunes significativas"""
-        words1 = set(word for word in str1.lower().split() if len(word) >= min_length)
-        words2 = set(word for word in str2.lower().split() if len(word) >= min_length)
-        return list(words1 & words2)

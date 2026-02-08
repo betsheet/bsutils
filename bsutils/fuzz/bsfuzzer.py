@@ -10,6 +10,7 @@ Devuelve el mejor event_string así como el ratio obtenido para dicho resultado,
 class BSFuzzer:
 
     # TODO: distinguir métodos públicos y privados
+    # TODO: usar escala 0-1 en todos sitios
 
     def __init__(self):
         pass

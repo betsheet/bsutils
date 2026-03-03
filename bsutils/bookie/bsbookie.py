@@ -16,6 +16,7 @@ class BSBookieEnum(Enum):
     BWIN = "Bwin"
     KAMBI = "Kambi"
     PINNACLE = "Pinnacle"
+    CASINIA = "Casinia"
     NONE = "None"
 
 # TODO: Esta clase quizás debería estar en el paquete del cliente.

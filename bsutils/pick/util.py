@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Optional
 
 from typing_extensions import override
 
@@ -20,6 +21,7 @@ class PickSourceEnum(Enum):
     BETAMINIC_BETTING_SHOTS = "BetaminicBettingShots"
     INPLAY_FOOTBALL_TIPS = "InplayFootballTips"
     BETTING_SIGNALS = "BettingSignals"
+    SOLOPICKS = "Solopicks"
     TEST = "Test"
 
 
@@ -58,7 +60,7 @@ class BSSelectionOptionEnum(Enum):
 class BSSelection(BSBaseEntity):
     market: BSMarketEnum
     option: BSSelectionOptionEnum
-    value: str | None
+    value: Optional[str]
 
     @staticmethod
     def empty_selection() -> "BSSelection":

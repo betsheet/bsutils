@@ -28,6 +28,7 @@ class PickSourceEnum(Enum):
 class PickSportEnum(Enum):
     FOOTBALL = "Soccer"  # le ponemos soccer en vez de football porque así aparece la clase en Sportium
     BASKETBALL = "Basketball"
+    VOLLEYBALL = "Volleyball"
     TENNIS = "Tennis"
     HANDBALL = "Handball"
     HORSE_RACING = "HorseRacing"

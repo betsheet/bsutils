@@ -1,3 +1,5 @@
+from typing import Optional
+
 from bsutils.base.base import BSBaseEntity
 from bsutils.bookie.bsbookie import BSBookieEnum
 from bsutils.pick.util import PickResult, PickSourceEnum, BSSelection, BSMarketEnum, PickSportEnum
@@ -5,28 +7,27 @@ from bsutils.pick.util import PickResult, PickSourceEnum, BSSelection, BSMarketE
 
 # Pick class
 class Pick(BSBaseEntity):
-    # TODO cambiar a formato Optional[]
-    user_id: str | None = None  # el pick están siempre asociados al usuario que lo proporcionó.
-    message_id: str | None = None  # id del mensaje del que hemos obtenido el pick
-    source: PickSourceEnum | None = None
+    user_id: Optional[str] = None  # el pick están siempre asociados al usuario que lo proporcionó.
+    message_id: Optional[str] = None  # id del mensaje del que hemos obtenido el pick
+    source: Optional[PickSourceEnum] = None
 
-    bookie: BSBookieEnum | None = None  # bookie para la que se publicó el pick, aunque la coloquemos en otra
-    sport: PickSportEnum | None = None
-    competition_group: str | None = None
-    competition: str | None = None
+    bookie: Optional[BSBookieEnum] = None  # bookie para la que se publicó el pick, aunque la coloquemos en otra
+    sport: Optional[PickSportEnum] = None
+    competition_group: Optional[str] = None
+    competition: Optional[str] = None
 
-    date: str | None = None
-    time: str | None = None
+    date: Optional[str] = None
+    time: Optional[str] = None
     is_live: bool = False
 
-    participants: list[str] | None = None  # se obtienen del string del event.
+    participants: Optional[list[str]] = None  # se obtienen del string del event.
 
-    selection: BSSelection | None = None
-    min_odds: float | None = None
-    stake_units: float | None = None
+    selection: Optional[BSSelection] = None
+    min_odds: Optional[float] = None
+    stake_units: Optional[float] = None
 
-    reception_time: str | None = None
-    result: PickResult | None = None
+    reception_time: Optional[str] = None
+    result: Optional[PickResult] = None
 
     def get_event_string(self, separator: str = " vs. ") -> str:
         return f"{self.participants[0]}{separator}{self.participants[1]}"
@@ -42,8 +43,8 @@ class Pick(BSBaseEntity):
         return str(self)
 
 class BetaminicPick(Pick):
-    betaminic_strategy: str | None = None  # en el futuro deberíamos tener un enum de estrategias
-    email_message_id: str | None = None
+    betaminic_strategy: Optional[str] = None  # en el futuro deberíamos tener un enum de estrategias
+    email_message_id: Optional[str] = None
 
     def is_betaminic_1x2_pick(self) -> bool:
         return self.selection.market in [BSMarketEnum.RESULT]

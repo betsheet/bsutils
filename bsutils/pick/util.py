@@ -1,8 +1,6 @@
 from enum import Enum
 from typing import Optional
-
 from typing_extensions import override
-
 from bsutils.base.base import BSBaseEntity
 
 

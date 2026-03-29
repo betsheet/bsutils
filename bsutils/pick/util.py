@@ -32,7 +32,9 @@ class PickSportEnum(Enum):
     TENNIS = "Tennis"
     HANDBALL = "Handball"
     HORSE_RACING = "HorseRacing"
+    ICE_HOCKEY = "IceHockey"
     ESPORTS = "E-Sports"
+    FLOORBALL = "Floorball"
 
 
 class BSMarketEnum(Enum):

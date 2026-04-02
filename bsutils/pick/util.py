@@ -40,6 +40,7 @@ class BSMarketEnum(Enum):
     ASIAN_HANDICAP = "AsianHandicap"
     HALF_TIME_ASIAN_HANDICAP = "HalfTimeAsianHandicap"  # 1st Half Asian Handicap
     TOTAL_GOALS = "TotalGoals"
+    GAME_LINES = "GameLines"
     HALF_TIME_TOTAL_GOALS = "HalfTimeTotalGoals"
     TOTALS = "Totals"
     SPREAD = "Spread"

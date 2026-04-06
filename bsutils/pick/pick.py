@@ -43,7 +43,7 @@ class Pick(BSBaseEntity):
             f"  ⚽  Deporte:      {self.sport.value if self.sport else 'N/A'}",
             f"  🏆  Competición:  {self.competition or 'N/A'}",
             f"  📅  Fecha:        {self.date or 'N/A'} {self.time or ''}".rstrip(),
-            f"  🎯  Mercado:      {self.selection.market.value if self.selection else 'N/A'}",
+            f"  🎯  Mercado:      {self.selection.market.value if self.selection and self.selection.market else 'N/A'}",
             f"  ✅  Selección:    {str(self.selection) if self.selection else 'N/A'}",
             f"  💰  Cuota mín.:  {self.min_odds if self.min_odds is not None else 'N/A'}",
             f"  📊  Stake:        {self.stake_units if self.stake_units is not None else 'N/A'}",

@@ -36,8 +36,23 @@ class Pick(BSBaseEntity):
         self.id_ = id_
 
     def __str__(self):
-        return (f"{' v '.join(self.participants)} - {self.selection.market.value} "
-                f"{self.selection.option.value if self.selection.option is not None else ''}{' - ' + self.selection.value if self.selection.value is not None else ''} @ {self.min_odds}")
+        participants_str = " v ".join(self.participants) if self.participants else "N/A"
+        lines = [
+            "📋 Pick",
+            f"  🏟️  Evento:       {participants_str}",
+            f"  ⚽  Deporte:      {self.sport.value if self.sport else 'N/A'}",
+            f"  🏆  Competición:  {self.competition or 'N/A'}",
+            f"  📅  Fecha:        {self.date or 'N/A'} {self.time or ''}".rstrip(),
+            f"  🎯  Mercado:      {self.selection.market.value if self.selection else 'N/A'}",
+            f"  ✅  Selección:    {str(self.selection) if self.selection else 'N/A'}",
+            f"  💰  Cuota mín.:  {self.min_odds if self.min_odds is not None else 'N/A'}",
+            f"  📊  Stake:        {self.stake_units if self.stake_units is not None else 'N/A'}",
+            f"  🏦  Bookie:       {self.bookie.value if self.bookie else 'N/A'}",
+            f"  📡  Fuente:       {self.source.value if self.source else 'N/A'}",
+            f"  🔴  En vivo:      {'Sí' if self.is_live else 'No'}",
+            f"  🏁  Resultado:    {self.result.value if self.result else 'N/A'}",
+        ]
+        return "\n".join(lines)
 
     def to_str(self):
         return str(self)

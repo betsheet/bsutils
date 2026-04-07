@@ -78,4 +78,4 @@ class BSSelection(BSBaseEntity):
         return json_dict
 
     def __str__(self):
-        return f"{self.market.value if self.market is not None else ''} - {self.option.value} {self.value if self.value is not None else ''}".strip()
+        return f"{self.market.value if self.market is not None else ''} - {self.option} {self.value if self.value is not None else ''}".strip()

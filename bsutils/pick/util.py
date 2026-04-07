@@ -44,7 +44,9 @@ class BSMarketEnum(Enum):
     TOTAL_GOALS = "TotalGoals"
     GAME_LINES = "GameLines"
     HALF_TIME_TOTAL_GOALS = "HalfTimeTotalGoals"
-    TOTALS = "Totals"
+    TOTALS = "Totals"   # TODO: cambiar a TOTAL
+    PARTICIPANT_TOTAL = "ParticipantTotal"
+    PARTICIPANT_HALF_TIME_TOTAL = "ParticipantHalfTimeTotal"
     SPREAD = "Spread"
     MONEY_LINE = "MoneyLine"
     TO_WIN = "ToWin"

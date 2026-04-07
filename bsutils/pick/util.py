@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Optional
+from typing import Optional, Union
 from typing_extensions import override
 from bsutils.base.base import BSBaseEntity
 
@@ -64,7 +64,7 @@ class BSSelectionOptionEnum(Enum):
 
 class BSSelection(BSBaseEntity):
     market: BSMarketEnum
-    option: BSSelectionOptionEnum
+    option: Union[BSSelectionOptionEnum, tuple[BSSelectionOptionEnum, BSSelectionOptionEnum]]
     value: Optional[str]
 
     @staticmethod

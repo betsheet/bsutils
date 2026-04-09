@@ -35,22 +35,37 @@ class Pick(BSBaseEntity):
     def set_id(self, id_: str) -> None:
         self.id_ = id_
 
+    def _format_selection(self) -> str:
+        if self.selection is None:
+            return "N/A"
+        if isinstance(self.selection, tuple):
+            return f"{self.selection[0]} | {self.selection[1]}"
+        return str(self.selection)
+
+    def _format_market(self) -> str:
+        if self.selection is None:
+            return "N/A"
+        if isinstance(self.selection, tuple):
+            markets = {s.market.value for s in self.selection if s.market}
+            return " | ".join(markets) if markets else "N/A"
+        return self.selection.market.value if self.selection.market else "N/A"
+
     def __str__(self):
         participants_str = " v ".join(self.participants) if self.participants else "N/A"
         lines = [
             "📋 Pick",
-            f"  🏟️  Evento:       {participants_str}",
-            f"  ⚽  Deporte:      {self.sport.value if self.sport else 'N/A'}",
-            f"  🏆  Competición:  {self.competition or 'N/A'}",
-            f"  📅  Fecha:        {self.date or 'N/A'} {self.time or ''}".rstrip(),
-            f"  🎯  Mercado:      {self.selection.market.value if self.selection and self.selection.market else 'N/A'}",
-            f"  ✅  Selección:    {str(self.selection) if self.selection else 'N/A'}",
-            f"  💰  Cuota mín.:  {self.min_odds if self.min_odds is not None else 'N/A'}",
+            f"  🏟️  Event:        {participants_str}",
+            f"  ⚽  Sport:        {self.sport.value if self.sport else 'N/A'}",
+            f"  🏆  Competition:  {self.competition or 'N/A'}",
+            f"  📅  Date:         {self.date or 'N/A'} {self.time or ''}".rstrip(),
+            f"  🎯  Market:       {self._format_market()}",
+            f"  ✅  Selection:    {self._format_selection()}",
+            f"  💰  Min. odds:    {self.min_odds if self.min_odds is not None else 'N/A'}",
             f"  📊  Stake:        {self.stake_units if self.stake_units is not None else 'N/A'}",
             f"  🏦  Bookie:       {self.bookie.value if self.bookie else 'N/A'}",
-            f"  📡  Fuente:       {self.source.value if self.source else 'N/A'}",
-            f"  🔴  En vivo:      {'Sí' if self.is_live else 'No'}",
-            f"  🏁  Resultado:    {self.result.value if self.result else 'N/A'}",
+            f"  📡  Source:       {self.source.value if self.source else 'N/A'}",
+            f"  🔴  Live:         {'Yes' if self.is_live else 'No'}",
+            f"  🏁  Result:       {self.result.value if self.result else 'N/A'}",
         ]
         return "\n".join(lines)
 

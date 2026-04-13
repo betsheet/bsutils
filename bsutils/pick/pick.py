@@ -65,6 +65,7 @@ class Pick(BSBaseEntity):
             f"  🏦  Bookie:       {self.bookie.value if self.bookie else 'N/A'}",
             f"  📡  Source:       {self.source.value if self.source else 'N/A'}",
             f"  🔴  Live:         {'Yes' if self.is_live else 'No'}",
+            f"  🕐  Reception:    {self.reception_time or 'N/A'}",
             f"  🏁  Result:       {self.result.value if self.result else 'N/A'}",
         ]
         return "\n".join(lines)

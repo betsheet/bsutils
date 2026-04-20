@@ -24,6 +24,11 @@ class BSFuzzer:
         return fuzz.partial_ratio(str1, str2)
 
     @staticmethod
+    def get_average_ratio(str1: str, str2: str) -> float:
+        return 0.5 * (BSFuzzer.get_ratio(str1, str2) + BSFuzzer.get_partial_ratio(str1, str2))
+
+
+    @staticmethod
     def check_participant_similarity(web_participant: str, pick_participant: str, min_ratio: int = 42,
                                      min_partial_ratio: int = 85) -> bool:
         ratio: float = BSFuzzer.get_ratio(web_participant, pick_participant)

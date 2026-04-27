@@ -38,6 +38,7 @@ class PickSportEnum(Enum):
 class BSMarketEnum(Enum):
     RESULT = "1x2"
     DRAW_NO_BET = "DrawNoBet"
+    BOTH_TEAMS_TO_SCORE = "BothTeamsToScore"
     HANDICAP = "Handicap"
     HALF_TIME_HANDICAP = "HalfTimeHandicap"
     ASIAN_HANDICAP = "AsianHandicap"
@@ -63,6 +64,8 @@ class BSSelectionOptionEnum(Enum):
     OVER = "Over"
     UNDER = "Under"
     HORSE = "Horse"
+    YES = "Yes"
+    NO = "No"
     NONE = "None"
 
 

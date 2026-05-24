@@ -29,6 +29,7 @@ class BetError(Enum):
 
 
 class Bet(BaseModel):
+    id_: Optional[str] = Field(default=None, alias="_id", description="ID of the Bet")
     pick_id: str = Field(description="ID of the pick")
     user_id: str = Field(description="ID of the user")
     bookie: BookieEnum = Field(description="Bookie for the bet")

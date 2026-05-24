@@ -55,6 +55,19 @@ class Bet(BaseModel):
     def get_pick_id(self) -> str:
         return self.pick_id
 
+    def to_dict(self) -> dict:
+        data = self.model_dump(by_alias=True) if hasattr(self, 'model_dump') else self.dict(by_alias=True)
+        if self.bookie is not None:
+            data["bookie"] = self.bookie.value
+        if self.placing_error is not None:
+            data["placing_error"] = self.placing_error.value
+        return data
+
     def __str__(self):
-        # TODO: mejorar. que queden claros los campos relevantes
-        return f"Bet[{self.bookie.value}] {self.pick_id}"
+        return (
+            f"Bet: id={self.id_}, pick_id={self.pick_id}, user_id={self.user_id}, "
+            f"bookie={self.bookie.value if self.bookie else None}, stake={self.stake}, "
+            f"placed_odds={self.placed_odds}, is_placed={self.is_placed}, "
+            f"placement_time={self.placement_time}, "
+            f"placing_error={self.placing_error.value if self.placing_error else None}"
+        )

@@ -1,6 +1,7 @@
 import json
 from typing import Any
 
+# TODO: ver si se usa en algún sitio, sino eliminar, tengo serias dudas de que sea imprescindible
 class BSConfig:
 
     def __init__(self, json_config_file_path: str):

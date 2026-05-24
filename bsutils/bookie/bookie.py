@@ -1,10 +1,10 @@
 from enum import Enum
 from typing import Optional
 
-from bsutils.base.base import BSBaseEntity
+from pydantic import BaseModel, Field
 
 
-class BSBookieEnum(Enum):
+class BookieEnum(Enum):
     BLACK_BETINASIA = "BlackBetInAsia"
     SPORTIUM = "Sportium"
     BET_365 = "Bet365"
@@ -19,11 +19,17 @@ class BSBookieEnum(Enum):
     CASINIA = "Casinia"
     NONE = "None"
 
-# TODO: Esta clase quizás debería estar en el paquete del cliente.
-# esto no debemos guardarlo nunca en nuestra base de datos, sino en el cliente
-class BSBookieCredentials(BSBaseEntity):
+
+class Bookie(BaseModel):
+    """ Represents models from 'bookie' collection"""
+    bookie_id: Optional[str] = Field(..., description="Unique identifier of the bookie", min_length=1)
+    name: BookieEnum = Field(..., description="Name of the bookie")
+
+
+class BookieCredentials(BaseModel):
+    """ Represents models from 'bookie_credentials' collection"""
     user_id: Optional[str]
-    bookie: BSBookieEnum
+    bookie: BookieEnum
     username: str
     password: str
     url: str

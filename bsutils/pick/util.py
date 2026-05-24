@@ -1,7 +1,7 @@
 from enum import Enum
 from typing import Optional, Union
-from typing_extensions import override
-from bsutils.base.base import BSBaseEntity
+
+from pydantic import BaseModel, Field
 
 
 class PickResult(Enum):
@@ -35,7 +35,7 @@ class PickSportEnum(Enum):
     FLOORBALL = "Floorball"
 
 
-class BSMarketEnum(Enum):
+class PickMarketEnum(Enum):
     RESULT = "1x2"
     DRAW_NO_BET = "DrawNoBet"
     BOTH_TEAMS_TO_SCORE = "BothTeamsToScore"
@@ -47,7 +47,7 @@ class BSMarketEnum(Enum):
     GOAL_LINE = "GoalLine"
     GAME_LINES = "GameLines"
     HALF_TIME_TOTAL_GOALS = "HalfTimeTotalGoals"
-    TOTALS = "Totals"   # TODO: cambiar a TOTAL
+    TOTALS = "Totals"  # TODO: cambiar a TOTAL
     PARTICIPANT_TOTAL = "ParticipantTotal"
     PARTICIPANT_HALF_TIME_TOTAL = "ParticipantHalfTimeTotal"
     SPREAD = "Spread"
@@ -57,7 +57,7 @@ class BSMarketEnum(Enum):
     NONE = "None"
 
 
-class BSSelectionOptionEnum(Enum):
+class PickSelectionOptionEnum(Enum):
     HOME = "Home"
     DRAW = "Draw"
     AWAY = "Away"
@@ -69,16 +69,16 @@ class BSSelectionOptionEnum(Enum):
     NONE = "None"
 
 
-class BSSelection(BSBaseEntity):
-    market: BSMarketEnum
-    option: Union[BSSelectionOptionEnum, tuple[BSSelectionOptionEnum, BSSelectionOptionEnum]]
-    value: Optional[str]
+class PickSelection(BaseModel):
+    market: PickMarketEnum = Field(description="Market of the selection")
+    option: Union[PickSelectionOptionEnum, tuple[PickSelectionOptionEnum, PickSelectionOptionEnum]] = Field(
+        description="Option chosen in the market")
+    value: Optional[str] = Field(default=None, description="Value of the option (e.g. handicap line)")
 
     @staticmethod
-    def empty_selection() -> "BSSelection":
-        return BSSelection(market=BSMarketEnum.NONE, option=BSSelectionOptionEnum.NONE, value=None)
+    def empty_selection() -> "PickSelection":
+        return PickSelection(market=PickMarketEnum.NONE, option=PickSelectionOptionEnum.NONE, value=None)
 
-    @override
     def as_json(self):
         json_dict: dict = self.model_dump(by_alias=True, mode='json')
         del json_dict['_id']

@@ -79,9 +79,9 @@ General utility functions including project root path detection.
 
 ```python
 from bsutils.bet.bet import Bet
-from bsutils.bookie.bsbookie import BSBookieEnum
+from bsutils.bookie.bookie import BSBookieEnum
 from bsutils.pick.pick import Pick
-from bsutils.pick.util import BSSelection, BSMarketEnum, BSSelectionOptionEnum
+from bsutils.pick.util import BSSelection, PickMarketEnum, PickSelectionOptionEnum
 from bsutils.logger.bslogger import BSLogger
 from bsutils.database.bsmongo import BSMongo
 
@@ -94,8 +94,8 @@ pick = Pick(
     sport="Soccer",
     participants=["Real Madrid", "Barcelona"],
     selection=BSSelection(
-        market=BSMarketEnum.RESULT,
-        option=BSSelectionOptionEnum.HOME,
+        market=PickMarketEnum.RESULT,
+        option=PickSelectionOptionEnum.HOME,
         value=None
     ),
     min_odds=2.5,

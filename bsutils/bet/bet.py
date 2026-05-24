@@ -1,9 +1,10 @@
 from datetime import datetime
 from enum import Enum
 from typing import Optional
-from bson import ObjectId
-from bsutils.base.base import BSBaseEntity
-from bsutils.bookie.bsbookie import BSBookieEnum
+
+from pydantic import BaseModel, Field
+
+from bsutils.bookie.bookie import BookieEnum
 
 
 class BetError(Enum):
@@ -27,15 +28,15 @@ class BetError(Enum):
     GENERIC_EXCEPTION = "GenericException"
 
 
-class Bet(BSBaseEntity):
-    pick_id: str
-    user_id: str
-    bookie: BSBookieEnum
-    stake: float
-    placed_odds: Optional[float] | None = None
-    is_placed: Optional[bool] | None = False
-    placement_time: str | None = None
-    placing_error: Optional[BetError] | None = None
+class Bet(BaseModel):
+    pick_id: str = Field(description="ID of the pick")
+    user_id: str = Field(description="ID of the user")
+    bookie: BookieEnum = Field(description="Bookie for the bet")
+    stake: float = Field(description="Stake amount")
+    placed_odds: Optional[float] = Field(default=None, description="Final odds the bet was placed with")
+    is_placed: Optional[bool] = Field(default=False, description="Status indicating if bet is placed")
+    placement_time: Optional[str] = Field(default=None, description="Placement timestamp string")
+    placing_error: Optional[BetError] = Field(default=None, description="Error that occurred during placement")
 
     def raise_bet_exception(self, err: BetError):
         self.placing_error = err
@@ -50,8 +51,9 @@ class Bet(BSBaseEntity):
         if placed_odds is not None:
             self.set_placed_odds(placed_odds)
 
-    def get_pick_id(self) -> ObjectId:
-        return ObjectId(self.pick_id)
+    def get_pick_id(self) -> str:
+        return self.pick_id
 
     def __str__(self):
-        return f"Bet[{self.bookie.value}] {self.id_}"
+        # TODO: mejorar. que queden claros los campos relevantes
+        return f"Bet[{self.bookie.value}] {self.pick_id}"

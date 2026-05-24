@@ -1,33 +1,35 @@
 from typing import Optional
 
-from bsutils.base.base import BSBaseEntity
-from bsutils.bookie.bsbookie import BSBookieEnum
-from bsutils.pick.util import PickResult, PickSourceEnum, BSSelection, BSMarketEnum, PickSportEnum
+from pydantic import BaseModel, Field
+
+from bsutils.bookie.bookie import BookieEnum
+from bsutils.pick.util import PickResult, PickSourceEnum, BSSelection, PickMarketEnum, PickSportEnum
 
 
 # Pick class
-class Pick(BSBaseEntity):
-    user_id: Optional[str] = None  # el pick están siempre asociados al usuario que lo proporcionó.
-    message_id: Optional[str] = None  # id del mensaje del que hemos obtenido el pick
-    source: Optional[PickSourceEnum] = None
+class Pick(BaseModel):
+    id_: Optional[str] = Field(default=None, description="Pick identifier")
+    user_id: Optional[str] = Field(default=None, description="User ID associated with the pick")
+    message_id: Optional[str] = Field(default=None, description="Message ID from which the pick was obtained")
+    source: Optional[PickSourceEnum] = Field(default=None, description="Source of the pick")
 
-    bookie: Optional[BSBookieEnum] = None  # bookie para la que se publicó el pick, aunque la coloquemos en otra
-    sport: Optional[PickSportEnum] = None
-    competition_group: Optional[str] = None
-    competition: Optional[str] = None
+    bookie: Optional[BookieEnum] = Field(default=None, description="Bookie where the pick was published")
+    sport: Optional[PickSportEnum] = Field(default=None, description="Sport of the event")
+    competition_group: Optional[str] = Field(default=None, description="Group of the competition")
+    competition: Optional[str] = Field(default=None, description="Competition name")
 
-    date: Optional[str] = None
-    time: Optional[str] = None
-    is_live: bool = False
+    date: Optional[str] = Field(default=None, description="Date of the event")
+    time: Optional[str] = Field(default=None, description="Time of the event")
+    is_live: bool = Field(default=False, description="Indicates if the event is live")
 
-    participants: Optional[list[str]] = None  # se obtienen del string del event.
+    participants: Optional[list[str]] = Field(default=None, description="List of participants in the event")
 
-    selection: Optional[BSSelection] = None
-    min_odds: Optional[float] = None
-    stake_units: Optional[float] = None
+    selection: Optional[BSSelection] = Field(default=None, description="The selection/bet chosen")
+    min_odds: Optional[float] = Field(default=None, description="Minimum odds for the pick")
+    stake_units: Optional[float] = Field(default=None, description="Stake units for the pick")
 
-    reception_time: Optional[str] = None
-    result: Optional[PickResult] = None
+    reception_time: Optional[str] = Field(default=None, description="Time when the pick was received")
+    result: Optional[PickResult] = Field(default=None, description="Result of the pick")
 
     def get_event_string(self, separator: str = " vs. ") -> str:
         return f"{self.participants[0]}{separator}{self.participants[1]}"
@@ -73,12 +75,3 @@ class Pick(BSBaseEntity):
     def to_str(self):
         return str(self)
 
-class BetaminicPick(Pick):
-    betaminic_strategy: Optional[str] = None  # en el futuro deberíamos tener un enum de estrategias
-    email_message_id: Optional[str] = None
-
-    def is_betaminic_1x2_pick(self) -> bool:
-        return self.selection.market in [BSMarketEnum.RESULT]
-
-    def is_betaminic_asian_pick(self) -> bool:
-        return self.selection.market in [BSMarketEnum.TOTAL_GOALS, BSMarketEnum.ASIAN_HANDICAP]

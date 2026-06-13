@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel, Field
 
 from bsutils.bookie.bookie import BookieEnum
-from bsutils.pick.util import PickResult, PickSourceEnum, BSSelection, PickMarketEnum, PickSportEnum
+from bsutils.pick.util import PickResult, PickSourceEnum, PickSelection, PickSportEnum
 
 
 # Pick class
@@ -24,7 +24,7 @@ class Pick(BaseModel):
 
     participants: Optional[list[str]] = Field(default=None, description="List of participants in the event")
 
-    selection: Optional[BSSelection] = Field(default=None, description="The selection/bet chosen")
+    selection: Optional[PickSelection] = Field(default=None, description="The selection/bet chosen")
     min_odds: Optional[float] = Field(default=None, description="Minimum odds for the pick")
     stake_units: Optional[float] = Field(default=None, description="Stake units for the pick")
 
